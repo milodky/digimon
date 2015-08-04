@@ -4,7 +4,7 @@ module Digimon
     params = params.dup.with_indifferent_access
     method = method.to_sym
     METHOD_STRATEGIES[method] ||= self.initialize_strategy(params)
-    self._add_singleton_method(method) if self.respond_to?(:search)
+    self._add_singleton_method(method) if self.respond_to?(method.to_sym)
   end
 
   def _add_singleton_method(method)
@@ -45,7 +45,7 @@ module Digimon
       when 'time_window'
         TimeWindow.new(params)
       else
-        Raise UndefinedStrategy.new(params[:status])
+        raise UndefinedStrategy.new(params[:strategy])
     end
   end
 end
